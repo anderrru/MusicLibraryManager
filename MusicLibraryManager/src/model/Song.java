@@ -27,4 +27,8 @@ public class Song {
 	public int getRating() {
 		return rating.getRating();
 	}
+	
+	public String toString() {
+		return title;
+	}
 }

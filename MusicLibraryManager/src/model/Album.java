@@ -1,11 +1,8 @@
-/*
- * This class represents an Album
- */
-
 package model;
 
 import java.util.ArrayList;
 
+// TODO: implement the genre using enum
 public class Album {
 	// class instance variables
 	private String title;
@@ -35,5 +32,11 @@ public class Album {
 	
 	public int getYear() {
 		return year;
+	}
+	
+	public String toString() {
+		String msg = String.format("%s, %d, %s: ", artist, year, title);
+		return msg + songs + "\n";
+		
 	}
 }
