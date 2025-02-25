@@ -30,6 +30,13 @@ public class Album {
 		return artist;
 	}
 	
+	public Song getSong(String title) {
+		for (Song s : songs) {
+			if (s.getTitle().equals(title)) return s;
+		}
+		return null;
+	}
+	
 	public int getYear() {
 		return year;
 	}
@@ -37,6 +44,5 @@ public class Album {
 	public String toString() {
 		String msg = String.format("%s, %d, %s: ", artist, year, title);
 		return msg + songs + "\n";
-		
 	}
 }

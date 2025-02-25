@@ -24,6 +24,10 @@ public class Song {
 		return favorite;
 	}
 	
+	public void setFavorite() {
+		favorite = true;
+	}
+	
 	public int getRating() {
 		return rating.getRating();
 	}

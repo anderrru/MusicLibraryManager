@@ -54,8 +54,32 @@ public class MusicStore {
 		}
 	}
 	
+	// TODO: implement search album by artist
+	public Song searchAlbumByArtist(String Artist) {
+		return null;
+	}
+	
 	public ArrayList<Album> getAlbums(){
 		return new ArrayList<>(albums);
+	}
+	
+	public Album searchAlbumByTitle(String title) {
+		for (Album a : albums) {
+			if (a.getTitle().equals(title)) return a;
+		}
+		return null;
+	}
+	
+	public Song searchSongByTitle(String title) {
+		for (Album a : albums) {
+			return a.getSong(title);
+		}
+		return null;
+	}
+	
+	// TODO: implement search song by artist
+	public Song searchSongByArtist(String Artist) {
+		return null;
 	}
 	
 }
