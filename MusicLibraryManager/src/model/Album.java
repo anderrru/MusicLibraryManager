@@ -30,6 +30,7 @@ public class Album {
 		return artist;
 	}
 	
+	// TODO: probably needs to return a copy of s so when user adds to library it wont be an alias.
 	public Song getSong(String title) {
 		for (Song s : songs) {
 			if (s.getTitle().equals(title)) return s;

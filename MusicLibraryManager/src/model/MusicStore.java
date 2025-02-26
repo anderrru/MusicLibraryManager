@@ -12,13 +12,13 @@ public class MusicStore {
 	public MusicStore() throws FileNotFoundException {
 		albums = new ArrayList<Album>();
 		albumNames = new ArrayList<String>();
-		readAlbums("albums.txt");
+		File myFile = new File("albums.txt");
+		readAlbums(myFile);
 		addAlbums(albumNames);
 	}
 	
 	// method reads the album.txt file which sets up for reading the individual album files
-	private void readAlbums(String fName) throws FileNotFoundException {
-		File myFile = new File(fName);
+	private void readAlbums(File myFile) throws FileNotFoundException {
 		Scanner myScanner = new Scanner(myFile);
 		while (myScanner.hasNext()) {
 			// makes album name match the file naming convention of <album>_<artist>
@@ -53,16 +53,21 @@ public class MusicStore {
 			albums.add(album);
 		}
 	}
-	
-	// TODO: implement search album by artist
-	public Song searchAlbumByArtist(String Artist) {
-		return null;
+
+	// returns arrayList of albums by artist
+	public ArrayList<Album> searchAlbumByArtist(String artist) {
+		ArrayList<Album> artistAlbums = new ArrayList<>();
+		for (Album a : albums) {
+			if (a.getArtist().equals(artist)) artistAlbums.add(a);
+		}
+		return artistAlbums;
 	}
 	
 	public ArrayList<Album> getAlbums(){
 		return new ArrayList<>(albums);
 	}
 	
+	// TODO: might need to return an arraylist instead to handle albums with the same name
 	public Album searchAlbumByTitle(String title) {
 		for (Album a : albums) {
 			if (a.getTitle().equals(title)) return a;
@@ -70,6 +75,7 @@ public class MusicStore {
 		return null;
 	}
 	
+	// TODO: same thing as album when handling songs with the same name
 	public Song searchSongByTitle(String title) {
 		for (Album a : albums) {
 			return a.getSong(title);
@@ -77,9 +83,13 @@ public class MusicStore {
 		return null;
 	}
 	
-	// TODO: implement search song by artist
-	public Song searchSongByArtist(String Artist) {
-		return null;
+	// returns arrayList of all songs by artist
+	public ArrayList<Song> searchSongByArtist(String artist) {
+		ArrayList<Song> artistSongs = new ArrayList<>();
+		for (Album a : albums) {
+			if (a.getArtist().equals(artist)) artistSongs.addAll(a.getSongs());
+		}
+		return artistSongs;
 	}
 	
 }
