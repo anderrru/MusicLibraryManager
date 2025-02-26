@@ -32,6 +32,7 @@ public class Song {
 		return rating.getRating();
 	}
 	
+	// not needed. just for testing
 	public String toString() {
 		return title;
 	}
