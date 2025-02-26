@@ -21,5 +21,12 @@ class SongTest {
 		song.setRating(5);
 		assertTrue(song.isFavorite());
 	}
+	
+	@Test
+	void testSetFavorite() {
+		Song song = new Song("Daydreamer");
+		song.setFavorite();
+		assertTrue(song.isFavorite());
+	}
 
 }
