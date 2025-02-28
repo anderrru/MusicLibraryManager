@@ -2,7 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
-// TODO: implement the genre using enum
+//Implementing genre using enum
+enum Genre {
+ ROCK, POP, JAZZ, CLASSICAL, HIPHOP, ELECTRONIC, COUNTRY, METAL, OTHER;
+}
+
 public class Album {
 	// class instance variables
 	private String title;

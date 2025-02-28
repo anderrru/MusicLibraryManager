@@ -16,7 +16,7 @@ public class MusicStore {
 		readAlbums(myFile);
 		addAlbums(albumNames);
 	}
-	
+
 	// method reads the album.txt file which sets up for reading the individual album files
 	private void readAlbums(File myFile) throws FileNotFoundException {
 		Scanner myScanner = new Scanner(myFile);
@@ -25,6 +25,7 @@ public class MusicStore {
 			String line = myScanner.nextLine().replace(',', '_');
 			albumNames.add(line);
 		}
+        myScanner.close();
 	}
 	
 	// reads through the ArrayList of album names to create a new ArrayList of Album objects which is the musicStore
@@ -47,11 +48,13 @@ public class MusicStore {
 				Song song = new Song(myScanner.nextLine());
 				songs.add(song);
 			}
-			
+	        myScanner.close();
+
 			// creates the album and adds it to the music store
 			Album album = new Album(title, artist, year, songs);
 			albums.add(album);
 		}
+		
 	}
 
 	// returns arrayList of albums by artist
@@ -67,21 +70,28 @@ public class MusicStore {
 		return new ArrayList<>(albums);
 	}
 	
-	// TODO: might need to return an arraylist instead to handle albums with the same name
-	public Album searchAlbumByTitle(String title) {
-		for (Album a : albums) {
-			if (a.getTitle().equals(title)) return a;
-		}
-		return null;
-	}
+    public ArrayList<Album> searchAlbumByTitle(String title) {
+        ArrayList<Album> matchedAlbums = new ArrayList<>();
+        for (Album a : albums) {
+            if (a.getTitle().equalsIgnoreCase(title)) {
+                matchedAlbums.add(a);
+            }
+        }
+        return matchedAlbums;
+    }
+
 	
-	// TODO: same thing as album when handling songs with the same name
-	public Song searchSongByTitle(String title) {
-		for (Album a : albums) {
-			return a.getSong(title);
-		}
-		return null;
-	}
+    public ArrayList<Song> searchSongsByTitle(String title) {
+        ArrayList<Song> matchedSongs = new ArrayList<>();
+        for (Album a : albums) {
+            for (Song s : a.getSongs()) {
+                if (s.getTitle().equalsIgnoreCase(title)) {
+                    matchedSongs.add(s);
+                }
+            }
+        }
+        return matchedSongs;
+    }
 	
 	// returns arrayList of all songs by artist
 	public ArrayList<Song> searchSongByArtist(String artist) {
