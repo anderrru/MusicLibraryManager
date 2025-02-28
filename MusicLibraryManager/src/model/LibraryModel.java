@@ -2,35 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-
-//Playlist class for user-defined song collections
-class PlayList {
- private String name;
- private ArrayList<Song> songs;
-
- public PlayList(String name) {
-     this.name = name;
-     this.songs = new ArrayList<>();
- }
-
- public String getName() {
-     return name;
- }
-
- public void addSong(Song song) {
-     songs.add(song);
- }
-
- public void removeSong(String title) {
-     songs.removeIf(song -> song.getTitle().equals(title));
- }
-
- public ArrayList<Song> getSongs() {
-     return new ArrayList<>(songs);
- }
-}
-
-
 public class LibraryModel {
 	private ArrayList<Song> songs;
 	private ArrayList<Album> albums;

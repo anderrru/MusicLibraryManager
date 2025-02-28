@@ -50,5 +50,24 @@ class AlbumTest {
 		Album album = new Album("19", "Adele", 2008, songs);
 		assertEquals(album.getSongs(), songs);
 	}
+	
+	@Test
+	void testAlbumToString(){
+		Song song = new Song("Daydreamer");
+		ArrayList<Song> songs = new ArrayList<>();
+		songs.add(song);
+		Album album = new Album("19", "Adele", 2008, songs);
+		assertEquals(album.toString(), "Adele, 2008, 19: [Daydreamer]\n");
+	}
+	
+	@Test
+	void testAlbumGetCopy(){
+		Song song = new Song("Daydreamer");
+		ArrayList<Song> songs = new ArrayList<>();
+		songs.add(song);
+		Album album = new Album("19", "Adele", 2008, songs);
+		Album copy = album.getAlbumCopy();
+		assertEquals(album.toString(), copy.toString());
+	}
 
 }

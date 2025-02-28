@@ -40,6 +40,7 @@ public class MusicStore {
 			String[] albumInfo = myScanner.nextLine().split(",");
 			String title = albumInfo[0];
 			String artist = albumInfo[1];
+			// String genre = albumInfo[2].toUpperCase().replace(' ', '_').replace('&', '_');
 			int year = Integer.valueOf(albumInfo[3]);
 			
 			// create arrayList of songs
@@ -61,7 +62,7 @@ public class MusicStore {
 	public ArrayList<Album> searchAlbumByArtist(String artist) {
 		ArrayList<Album> artistAlbums = new ArrayList<>();
 		for (Album a : albums) {
-			if (a.getArtist().equals(artist)) artistAlbums.add(a);
+			if (a.getArtist().equals(artist)) artistAlbums.add(a.getAlbumCopy());
 		}
 		return artistAlbums;
 	}
@@ -74,19 +75,19 @@ public class MusicStore {
         ArrayList<Album> matchedAlbums = new ArrayList<>();
         for (Album a : albums) {
             if (a.getTitle().equalsIgnoreCase(title)) {
-                matchedAlbums.add(a);
+                matchedAlbums.add(a.getAlbumCopy());
             }
         }
         return matchedAlbums;
     }
 
 	
-    public ArrayList<Song> searchSongsByTitle(String title) {
+    public ArrayList<Song> searchSongByTitle(String title) {
         ArrayList<Song> matchedSongs = new ArrayList<>();
         for (Album a : albums) {
             for (Song s : a.getSongs()) {
                 if (s.getTitle().equalsIgnoreCase(title)) {
-                    matchedSongs.add(s);
+                    matchedSongs.add(s.getCopy());
                 }
             }
         }
@@ -97,7 +98,7 @@ public class MusicStore {
 	public ArrayList<Song> searchSongByArtist(String artist) {
 		ArrayList<Song> artistSongs = new ArrayList<>();
 		for (Album a : albums) {
-			if (a.getArtist().equals(artist)) artistSongs.addAll(a.getSongs());
+			if (a.getArtist().equals(artist)) artistSongs.addAll(a.getAlbumCopy().getSongs());
 		}
 		return artistSongs;
 	}

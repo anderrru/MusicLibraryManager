@@ -3,9 +3,7 @@ package model;
 import java.util.ArrayList;
 
 //Implementing genre using enum
-enum Genre {
- ROCK, POP, JAZZ, CLASSICAL, HIPHOP, ELECTRONIC, COUNTRY, METAL, OTHER;
-}
+// enum Genre {ROCK, POP, ALTERNATIVE, TRADITIONAL_COUNTRY, LATIN, SING_SONGWRITER}
 
 public class Album {
 	// class instance variables
@@ -34,12 +32,20 @@ public class Album {
 		return artist;
 	}
 	
-	// TODO: probably needs to return a copy of s so when user adds to library it wont be an alias.
 	public Song getSong(String title) {
 		for (Song s : songs) {
-			if (s.getTitle().equals(title)) return s;
+			if (s.getTitle().equals(title)) return s.getCopy();
 		}
 		return null;
+	}
+	
+	public Album getAlbumCopy() {
+		ArrayList<Song> songs = new ArrayList<>();
+		for (Song s : this.songs) {
+			songs.add(s.getCopy());
+		}
+		Album a = new Album(this.title, this.artist, this.year, songs);
+		return a;
 	}
 	
 	public int getYear() {
