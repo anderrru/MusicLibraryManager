@@ -26,5 +26,4 @@ class LibraryModelTest {
 		lib.addSong(store.searchSongByTitle("Daydreamer").get(0));
 		assertEquals(lib.getSongs().get(0).toString(), store.searchSongByTitle("Daydreamer").get(0).toString());
 	}
-
 }

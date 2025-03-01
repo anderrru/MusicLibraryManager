@@ -30,7 +30,8 @@ public class View {
             System.out.println("10. Remove song from a playlist");
             System.out.println("11. Mark song as favorite");
             System.out.println("12. Rate a song");
-            System.out.println("13. Exit");
+            System.out.println("13. List Favorite Songs");
+            System.out.println("14. Exit");
             System.out.print("Choose an option: ");
             
             int choice = scanner.nextInt();
@@ -48,7 +49,8 @@ public class View {
                 case 10 -> removeSongFromPlaylist();
                 case 11 -> markSongAsFavorite();
                 case 12 -> rateSong();
-                case 13 -> {
+                case 13 -> getFavorites();
+                case 14 -> {
                     System.out.println("Exiting...");
                     return;
                 }
@@ -150,7 +152,8 @@ public class View {
         String playlistName = scanner.nextLine();
         System.out.print("Enter song title: ");
         String songTitle = scanner.nextLine();
-        // Additional logic needed to locate and add song to playlist
+        // Additional logic needed to locate and add song to playlists
+        library.getPlayList(playlistName).addSong(library.getSong(songTitle));
     }
 
     private void removeSongFromPlaylist() {
@@ -159,12 +162,14 @@ public class View {
         System.out.print("Enter song title to remove: ");
         String songTitle = scanner.nextLine();
         // Additional logic needed to locate and remove song from playlist
+        library.getPlayList(playlistName).removeSong(songTitle);
     }
 
     private void markSongAsFavorite() {
         System.out.print("Enter song title: ");
         String title = scanner.nextLine();
         // Additional logic to mark the song as favorite
+        library.getSong(title).setFavorite();
     }
 
     private void rateSong() {
@@ -174,5 +179,15 @@ public class View {
         int rating = scanner.nextInt();
         scanner.nextLine(); // consume newline
         // Additional logic to rate the song
+        library.getSong(title).setRating(rating);
+    }
+    
+    private void getFavorites() {
+    	if (library.getFavorites().size() == 0) {
+    		System.out.println("There are no current favorite songs.");
+    	}
+    	else {
+    		System.out.println(library.getFavorites());
+    	}
     }
 }

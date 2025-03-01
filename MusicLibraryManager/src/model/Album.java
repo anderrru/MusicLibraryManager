@@ -54,7 +54,7 @@ public class Album {
 	
 	// not needed, just for testing
 	public String toString() {
-		String msg = String.format("%s, %d, %s: ", artist, year, title);
-		return msg + songs + "\n";
+		String msg = String.format("%s by %s (%d)", title, artist, year);
+		return msg;
 	}
 }
