@@ -14,14 +14,14 @@ class SongTest {
 		song.setRating(5);
 		assertEquals(song.getRating(), 5);
 	}
-	
+
 	@Test
 	void testSongFavorite() {
 		Song song = new Song("Daydreamer");
 		song.setRating(5);
 		assertTrue(song.isFavorite());
 	}
-	
+
 	@Test
 	void testSetFavorite() {
 		Song song = new Song("Daydreamer");
