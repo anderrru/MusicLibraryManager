@@ -44,6 +44,8 @@ public class MusicStore {
 			String[] albumInfo = myScanner.nextLine().split(",");
 			String title = albumInfo[0];
 			String artist = albumInfo[1];
+			String genreName = albumInfo[2].toUpperCase().replace(' ', '_').replace('/', '_');
+			Genre genre = Genre.valueOf(genreName);
 			int year = Integer.valueOf(albumInfo[3]); // Year is the fourth item in the file
 
 			// Creates a list of songs for the album
@@ -55,7 +57,7 @@ public class MusicStore {
 			myScanner.close();
 
 			// Creates an Album object and adds it to the music store's album list
-			Album album = new Album(title, artist, year, songs);
+			Album album = new Album(title, artist, year, songs, genre);
 			albums.add(album);
 		}
 	}

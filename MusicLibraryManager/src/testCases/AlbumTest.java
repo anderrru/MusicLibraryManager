@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import model.Album;
+import model.Genre;
 import model.Song;
 
 class AlbumTest {
@@ -15,21 +16,21 @@ class AlbumTest {
 	void testAlbumName() {
 		Song song = new Song("Daydreamer");
 		ArrayList<Song> songs = new ArrayList<>();
-		Album album = new Album("19", "Adele", 2008, songs);
+		Album album = new Album("19", "Adele", 2008, songs, Genre.POP);
 		assertEquals(album.getTitle(), "19");
 	}
 
 	@Test
 	void testAlbumArtistName() {
 		ArrayList<Song> songs = new ArrayList<>();
-		Album album = new Album("19", "Adele", 2008, songs);
+		Album album = new Album("19", "Adele", 2008, songs, Genre.POP);
 		assertEquals(album.getArtist(), "Adele");
 	}
 
 	@Test
 	void testAlbumYear() {
 		ArrayList<Song> songs = new ArrayList<>();
-		Album album = new Album("19", "Adele", 2008, songs);
+		Album album = new Album("19", "Adele", 2008, songs, Genre.POP);
 		assertEquals(album.getYear(), 2008);
 	}
 
@@ -38,7 +39,7 @@ class AlbumTest {
 		Song song = new Song("Daydreamer");
 		ArrayList<Song> songs = new ArrayList<>();
 		songs.add(song);
-		Album album = new Album("19", "Adele", 2008, songs);
+		Album album = new Album("19", "Adele", 2008, songs, Genre.POP);
 		assertEquals(album.getSong("Daydreamer").getTitle(), "Daydreamer");
 	}
 
@@ -47,7 +48,7 @@ class AlbumTest {
 		Song song = new Song("Daydreamer");
 		ArrayList<Song> songs = new ArrayList<>();
 		songs.add(song);
-		Album album = new Album("19", "Adele", 2008, songs);
+		Album album = new Album("19", "Adele", 2008, songs, Genre.POP);
 		assertEquals(album.getSongs(), songs);
 	}
 
@@ -56,7 +57,7 @@ class AlbumTest {
 		Song song = new Song("Daydreamer");
 		ArrayList<Song> songs = new ArrayList<>();
 		songs.add(song);
-		Album album = new Album("19", "Adele", 2008, songs);
+		Album album = new Album("19", "Adele", 2008, songs, Genre.POP);
 		assertEquals(album.toString(), "19 by Adele (2008)");	
 	
 	}
@@ -66,7 +67,7 @@ class AlbumTest {
 		Song song = new Song("Daydreamer");
 		ArrayList<Song> songs = new ArrayList<>();
 		songs.add(song);
-		Album album = new Album("19", "Adele", 2008, songs);
+		Album album = new Album("19", "Adele", 2008, songs, Genre.POP);
 		Album copy = album.getAlbumCopy();
 		assertEquals(album.toString(), copy.toString());
 	}
