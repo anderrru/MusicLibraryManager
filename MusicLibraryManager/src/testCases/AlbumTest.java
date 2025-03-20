@@ -14,7 +14,6 @@ class AlbumTest {
 
 	@Test
 	void testAlbumName() {
-		Song song = new Song("Daydreamer");
 		ArrayList<Song> songs = new ArrayList<>();
 		Album album = new Album("19", "Adele", 2008, songs, Genre.POP);
 		assertEquals(album.getTitle(), "19");

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class LibraryModel {
 	private ArrayList<Song> songs; // List of songs in the library
@@ -12,6 +13,12 @@ public class LibraryModel {
 		songs = new ArrayList<>();
 		albums = new ArrayList<>();
 		playlists = new ArrayList<>();
+	}
+
+	public ArrayList<Song> getSuffledSongs() {
+		ArrayList<Song> shuffledSongs = new ArrayList<>(songs);
+		Collections.shuffle(shuffledSongs);
+		return shuffledSongs;
 	}
 
 	// Adds a song to the library
