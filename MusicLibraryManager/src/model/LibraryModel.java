@@ -47,6 +47,34 @@ public class LibraryModel {
 		}
 		return null; // Returns null if the song is not found
 	}
+	
+	public ArrayList<Album> searchAlbumByTitle(String title) {
+		ArrayList<Album> matchedAlbums = new ArrayList<>();
+		for (Album a : albums) {
+			if (a.getTitle().equalsIgnoreCase(title)) {
+				matchedAlbums.add(a.getAlbumCopy()); // Adds album if title matches
+			}
+		}
+		return matchedAlbums;
+	}
+	
+	public ArrayList<Album> searchAlbumByArtist(String artist) {
+		ArrayList<Album> artistAlbums = new ArrayList<>();
+		for (Album a : albums) {
+			if (a.getArtist().equals(artist))
+				artistAlbums.add(a.getAlbumCopy()); // Adds album if artist matches
+		}
+		return artistAlbums;
+	}
+	
+	public ArrayList<Song> searchSongByArtist(String artist) {
+		ArrayList<Song> artistSongs = new ArrayList<>();
+		for (Album a : albums) {
+			if (a.getArtist().equals(artist))
+				artistSongs.addAll(a.getAlbumCopy().getSongs()); // Adds all songs from matching albums
+		}
+		return artistSongs;
+	}
 
 	// Returns a list of all favorite songs
 	public ArrayList<Song> getFavorites() {
@@ -56,6 +84,18 @@ public class LibraryModel {
 				favorites.add(s); // Adds songs to the list that are marked as favorites
 		}
 		return favorites;
+	}
+	
+	public ArrayList<Song> searchSongByTitle(String title) {
+		ArrayList<Song> matchedSongs = new ArrayList<>();
+		for (Album a : albums) {
+			for (Song s : a.getSongs()) {
+				if (s.getTitle().equalsIgnoreCase(title)) {
+					matchedSongs.add(s.getCopy()); // Adds song if title matches
+				}
+			}
+		}
+		return matchedSongs;
 	}
 
 	// Returns a copy of the list of songs in the library
