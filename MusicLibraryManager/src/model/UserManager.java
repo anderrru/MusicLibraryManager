@@ -11,5 +11,9 @@ public class UserManager {
         users = new HashMap<>();
     }
 
+    public void addUser(User user) {
+        users.put(user.getUserName(), user);
+    }
+
     
 }
