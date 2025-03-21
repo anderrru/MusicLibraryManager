@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import model.Album;
+import model.Genre;
 import model.PlayList;
 import model.Song;
 
@@ -29,7 +30,7 @@ public class LibraryModelTest {
         ArrayList<Song> albumSongs = new ArrayList<>();
         albumSongs.add(new Song("Album Song 1"));
         albumSongs.add(new Song("Album Song 2"));
-        Album album = new Album("Album Title", "Album Artist", 2021, albumSongs);
+        Album album = new Album("Album Title", "Album Artist", 2021, albumSongs, Genre.POP);
         library.addAlbum(album);
         // Verify album list
         ArrayList<Album> albums = library.getAlbums();

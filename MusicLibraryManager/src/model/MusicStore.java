@@ -40,11 +40,21 @@ public class MusicStore {
             File myFile = new File(name);
             Scanner myScanner = new Scanner(myFile);
 
+<<<<<<< HEAD
             // Parses album information (title, artist, and year)
             String[] albumInfo = myScanner.nextLine().split(",");
             String title = albumInfo[0];
             String artist = albumInfo[1];
             int year = Integer.valueOf(albumInfo[3]); // Year is the fourth item in the file
+=======
+			// Parses album information (title, artist, and year)
+			String[] albumInfo = myScanner.nextLine().split(",");
+			String title = albumInfo[0];
+			String artist = albumInfo[1];
+			String genreName = albumInfo[2].toUpperCase().replace(' ', '_').replace('/', '_');
+			Genre genre = Genre.valueOf(genreName);
+			int year = Integer.valueOf(albumInfo[3]); // Year is the fourth item in the file
+>>>>>>> 5e75fbd607a471ad079fcc58da6ea495b0bab26a
 
             // Creates a list of songs for the album
             ArrayList<Song> songs = new ArrayList<>();
@@ -54,11 +64,19 @@ public class MusicStore {
             }
             myScanner.close();
 
+<<<<<<< HEAD
             // Creates an Album object and adds it to the music store's album list
             Album album = new Album(title, artist, year, songs);
             albums.add(album);
         }
     }
+=======
+			// Creates an Album object and adds it to the music store's album list
+			Album album = new Album(title, artist, year, songs, genre);
+			albums.add(album);
+		}
+	}
+>>>>>>> 5e75fbd607a471ad079fcc58da6ea495b0bab26a
 
     // Searches for albums by the artist and returns a list of matching albums
     public ArrayList<Album> searchAlbumByArtist(String artist) {

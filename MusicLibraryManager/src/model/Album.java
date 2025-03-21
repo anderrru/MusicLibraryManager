@@ -11,14 +11,16 @@ public class Album {
 	private int year; // Year of release
 	private String artist; // Artist of the album
 	private ArrayList<Song> songs; // List of songs in the album
+	private Genre genre;
 
 	// album constructor
 	// Initializes album with title, artist, year, and list of songs
-	public Album(String title, String artist, int year, ArrayList<Song> songs) {
+	public Album(String title, String artist, int year, ArrayList<Song> songs, Genre genre) {
 		this.title = title;
 		this.artist = artist;
 		this.year = year;
-		this.songs = new ArrayList<Song>(songs); // Copies the list of songs
+		this.songs = new ArrayList<Song>(songs); // Copies the list of songs\
+		this.genre = genre;
 	}
 
 	// Returns a copy of the list of songs in the album
@@ -34,6 +36,10 @@ public class Album {
 	// Returns the artist of the album
 	public String getArtist() {
 		return artist;
+	}
+	
+	public Genre getGenre() {
+		return genre;
 	}
 
 	// Retrieves a song from the album by title, returns a copy of the song
@@ -53,7 +59,7 @@ public class Album {
 			songs.add(s.getCopy());
 		}
 		// Creates and returns a new album with the copied songs
-		Album a = new Album(this.title, this.artist, this.year, songs);
+		Album a = new Album(this.title, this.artist, this.year, songs, this.genre);
 		return a;
 	}
 

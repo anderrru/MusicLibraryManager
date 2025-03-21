@@ -2,9 +2,12 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+<<<<<<< HEAD
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Random;
+=======
+>>>>>>> 5e75fbd607a471ad079fcc58da6ea495b0bab26a
 
 public class LibraryModel {
     private ArrayList<Song> songs; // List of songs in the library
@@ -18,6 +21,7 @@ public class LibraryModel {
         playlists = new ArrayList<>();
     }
 
+<<<<<<< HEAD
     // Adds a song to the library
     public void addSong(Song song) {
         // Check if song already exists to avoid duplicates
@@ -28,6 +32,18 @@ public class LibraryModel {
         }
         songs.add(song);
     }
+=======
+	public ArrayList<Song> getSuffledSongs() {
+		ArrayList<Song> shuffledSongs = new ArrayList<>(songs);
+		Collections.shuffle(shuffledSongs);
+		return shuffledSongs;
+	}
+
+	// Adds a song to the library
+	public void addSong(Song song) {
+		songs.add(song);
+	}
+>>>>>>> 5e75fbd607a471ad079fcc58da6ea495b0bab26a
 
     // Removes a song from the library
     public void removeSong(String title) {
@@ -69,6 +85,7 @@ public class LibraryModel {
         }
     }
 
+<<<<<<< HEAD
     // Creates a new playlist with the given name
     public void createPlaylist(String name) {
         playlists.add(new PlayList(name));
@@ -82,6 +99,66 @@ public class LibraryModel {
         }
         return null; // Returns null if no playlist is found with that name
     }
+=======
+	// Searches for a song by title and returns it
+	public Song getSong(String title) {
+		for (Song s : songs) {
+			if (s.getTitle().equals(title))
+				return s; // Finds and returns the song with the matching title
+		}
+		return null; // Returns null if the song is not found
+	}
+	
+	public ArrayList<Album> searchAlbumByTitle(String title) {
+		ArrayList<Album> matchedAlbums = new ArrayList<>();
+		for (Album a : albums) {
+			if (a.getTitle().equalsIgnoreCase(title)) {
+				matchedAlbums.add(a.getAlbumCopy()); // Adds album if title matches
+			}
+		}
+		return matchedAlbums;
+	}
+	
+	public ArrayList<Album> searchAlbumByArtist(String artist) {
+		ArrayList<Album> artistAlbums = new ArrayList<>();
+		for (Album a : albums) {
+			if (a.getArtist().equals(artist))
+				artistAlbums.add(a.getAlbumCopy()); // Adds album if artist matches
+		}
+		return artistAlbums;
+	}
+	
+	public ArrayList<Song> searchSongByArtist(String artist) {
+		ArrayList<Song> artistSongs = new ArrayList<>();
+		for (Album a : albums) {
+			if (a.getArtist().equals(artist))
+				artistSongs.addAll(a.getAlbumCopy().getSongs()); // Adds all songs from matching albums
+		}
+		return artistSongs;
+	}
+
+	// Returns a list of all favorite songs
+	public ArrayList<Song> getFavorites() {
+		ArrayList<Song> favorites = new ArrayList<>();
+		for (Song s : songs) {
+			if (s.isFavorite())
+				favorites.add(s); // Adds songs to the list that are marked as favorites
+		}
+		return favorites;
+	}
+	
+	public ArrayList<Song> searchSongByTitle(String title) {
+		ArrayList<Song> matchedSongs = new ArrayList<>();
+		for (Album a : albums) {
+			for (Song s : a.getSongs()) {
+				if (s.getTitle().equalsIgnoreCase(title)) {
+					matchedSongs.add(s.getCopy()); // Adds song if title matches
+				}
+			}
+		}
+		return matchedSongs;
+	}
+>>>>>>> 5e75fbd607a471ad079fcc58da6ea495b0bab26a
 
     // Searches for a song by title and returns it
     public Song getSong(String title) {
