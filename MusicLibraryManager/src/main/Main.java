@@ -4,13 +4,14 @@ import java.io.FileNotFoundException;
 
 import model.LibraryModel;
 import model.MusicStore;
+import model.UserManager;
+import view.LoginView;
 import view.View; // Import the View class
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
-		MusicStore store = new MusicStore();
-		LibraryModel userLib = new LibraryModel();
-		View view = new View(store, userLib);
-		view.start();
+		UserManager um = new UserManager();
+		LoginView loginView = new LoginView(um);
+		loginView.displayLoginScreen();
 	}
 }

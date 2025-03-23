@@ -1,6 +1,8 @@
 package view;
 
 import model.*;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,9 +12,14 @@ public class View {
 	private Scanner scanner; // Scanner to get user input
 
 	// Constructor that initializes the music store, library, and scanner
-	public View(MusicStore musicStore, LibraryModel library) {
-		this.musicStore = musicStore;
-		this.library = library;
+	public View(User user) {
+		try {
+			this.musicStore = new MusicStore();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.library = user.getLibrary();
 		this.scanner = new Scanner(System.in);
 	}
 
@@ -38,7 +45,7 @@ public class View {
 			System.out.println("15. Mark song as favorite");
 			System.out.println("16. Rate a song");
 			System.out.println("17. List Favorite Songs");
-			System.out.println("18. Exit");
+			System.out.println("18. Logout");
 			System.out.print("Choose an option: ");
 
 			int choice = scanner.nextInt();
@@ -62,7 +69,7 @@ public class View {
 			case 16 -> rateSong(); // Rate a song
 			case 17 -> getFavorites(); // List all favorite songs
 			case 18 -> { // Exit the program
-				System.out.println("Exiting...");
+				System.out.println("Loging out...");
 				return;
 			}
 			default -> System.out.println("Invalid choice. Try again."); // Handle invalid choices
