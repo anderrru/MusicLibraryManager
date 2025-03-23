@@ -6,22 +6,12 @@ public class Song {
     private boolean favorite; // Flag indicating if the song is marked as favorite
     private Rating rating; // Rating object for the song
     private boolean ratingSet; // Flag indicating if the song has a rating set
-    private String genre; // Genre of the song
 
     // Constructor to initialize the song with a title
     public Song(String title) {
         this.title = title;
         favorite = false; // Default to not favorite
         ratingSet = false; // Default to no rating set
-        genre = null; // Default to no genre
-    }
-    
-    // Constructor that also sets genre
-    public Song(String title, String genre) {
-        this.title = title;
-        this.genre = genre;
-        favorite = false;
-        ratingSet = false;
     }
 
     // Sets the rating for the song and marks it as a favorite if rating is 5
@@ -59,16 +49,7 @@ public class Song {
     public boolean hasRating() {
         return ratingSet;
     }
-    
-    // Sets the genre of the song
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-    
-    // Gets the genre of the song
-    public String getGenre() {
-        return genre;
-    }
+ 
 
     // Returns a copy of the song with the same attributes (title, favorite, rating, genre)
     public Song getCopy() {
@@ -77,9 +58,6 @@ public class Song {
             s.setFavorite(); // Copy the favorite status
         if (ratingSet) {
             s.setRating(getRating()); // Copy the rating if set
-        }
-        if (genre != null) {
-            s.setGenre(genre); // Copy the genre if set
         }
         return s;
     }

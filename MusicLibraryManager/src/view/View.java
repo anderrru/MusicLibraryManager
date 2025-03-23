@@ -32,7 +32,7 @@ public class View {
 			System.out.println("3. Search Store for an album by title");
 			System.out.println("4. Search Store for an album by artist");
 			System.out.println("---");
-			System.out.println("5. Search library for a song by tile");
+			System.out.println("5. Search library for a song by title");
 			System.out.println("6. Search library for a song by artist");
 			System.out.println("7. Search library for an album by title");
 			System.out.println("8. Search library for an album by artist");
@@ -45,7 +45,11 @@ public class View {
 			System.out.println("15. Mark song as favorite");
 			System.out.println("16. Rate a song");
 			System.out.println("17. List Favorite Songs");
-			System.out.println("18. Logout");
+			System.out.println("18. Get Popular Genres"); // New option
+			System.out.println("19. Get Top Rated Songs"); // New option
+			System.out.println("20. Get Shuffled Playlist"); // New option
+			System.out.println("21. Get Songs Sorted by Rating"); // New option
+			System.out.println("22. Logout");
 			System.out.print("Choose an option: ");
 
 			int choice = scanner.nextInt();
@@ -68,7 +72,11 @@ public class View {
 			case 15 -> markSongAsFavorite(); // Mark a song as favorite
 			case 16 -> rateSong(); // Rate a song
 			case 17 -> getFavorites(); // List all favorite songs
-			case 18 -> { // Exit the program
+			case 18 -> getPopularGenres(); // Call new method
+			case 19 -> getTopRatedSongs(); // Call new method
+			case 20 -> getShuffledPlaylist(); // Call new method
+			case 21 -> getSongsSortedByRating(); // Call new method
+			case 22 -> { // Exit the program
 				System.out.println("Loging out...");
 				return;
 			}
@@ -280,6 +288,54 @@ public class View {
 			System.out.println("There are no current favorite songs.");
 		} else {
 			System.out.println(library.getFavorites());
+		}
+	}
+
+	// Displays the popular genres in the library
+	private void getPopularGenres() {
+//		ArrayList<String> popularGenres = library.getPopularGenres();
+//		if (popularGenres.isEmpty()) {
+//			System.out.println("No popular genres found.");
+//		} else {
+//			System.out.println("Popular Genres:");
+//			for (String genre : popularGenres) {
+//				System.out.println("- " + genre);
+//			}
+//		}
+	}
+
+	private void getTopRatedSongs() {
+		PlayList topRated = library.getTopRatedSongs();
+		if (topRated.getSongs().isEmpty()) {
+			System.out.println("No top-rated songs found.");
+		} else {
+			System.out.println("Top Rated Songs:");
+			for (Song song : topRated.getSongs()) {
+				System.out.println("- " + song.getTitle() + " (Rating: " + song.getRating() + ")");
+			}
+		}
+	}
+
+	private void getShuffledPlaylist() {
+		PlayList shuffled = library.getShuffledPlaylist("My Playlist");
+		if (shuffled.getSongs().isEmpty()) {
+			System.out.println("No songs found in the playlist.");
+		} else {
+			System.out.println("Shuffled Playlist:");
+			for (Song song : shuffled.getSongs()) {
+				System.out.println("- " + song.getTitle());
+			}
+		}
+	}
+	private void getSongsSortedByRating() {
+		ArrayList<Song> sortedSongs = library.getSongsSortedByRating();
+		if (sortedSongs.isEmpty()) {
+			System.out.println("No songs found in the library.");
+		} else {
+			System.out.println("Songs Sorted by Rating:");
+			for (Song song : sortedSongs) {
+				System.out.println("- " + song.getTitle() + " (Rating: " + song.getRating() + ")");
+			}
 		}
 	}
 }
