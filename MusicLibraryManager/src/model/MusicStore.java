@@ -3,10 +3,14 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class MusicStore {
     private ArrayList<Album> albums; // List of albums in the music store
+    private HashMap<Album, ArrayList<Song>> albumSongMap;
     private ArrayList<String> albumNames; // List of album names (titles and artists)
 
     // Constructor reads album names from the "albums.txt" file and creates albums
@@ -14,6 +18,7 @@ public class MusicStore {
     public MusicStore() throws FileNotFoundException {
         albums = new ArrayList<Album>();
         albumNames = new ArrayList<String>();
+        albumSongMap = new HashMap<>();
         File myFile = new File("albums.txt");
         readAlbums(myFile); // Reads album names from "albums.txt"
         addAlbums(albumNames); // Creates albums and adds them to the music store
@@ -60,7 +65,9 @@ public class MusicStore {
 
             // Creates an Album object and adds it to the music store's album list
             Album album = new Album(title, artist, year, songs, genre);
+            albumSongMap.put(album, songs);
             albums.add(album);
+            
         }
     }
 
@@ -68,9 +75,10 @@ public class MusicStore {
     // Searches for albums by the artist and returns a list of matching albums
     public ArrayList<Album> searchAlbumByArtist(String artist) {
         ArrayList<Album> artistAlbums = new ArrayList<>();
-        for (Album a : albums) {
-            if (a.getArtist().equals(artist))
-                artistAlbums.add(a.getAlbumCopy()); // Adds album if artist matches
+        for (Album a : albumSongMap.keySet()) {
+            if (a.getArtist().equalsIgnoreCase(artist)) {
+                artistAlbums.add(a);
+            }
         }
         return artistAlbums;
     }
@@ -84,9 +92,9 @@ public class MusicStore {
     // matching albums
     public ArrayList<Album> searchAlbumByTitle(String title) {
         ArrayList<Album> matchedAlbums = new ArrayList<>();
-        for (Album a : albums) {
+        for (Album a : albumSongMap.keySet()) {
             if (a.getTitle().equalsIgnoreCase(title)) {
-                matchedAlbums.add(a.getAlbumCopy()); // Adds album if title matches
+                matchedAlbums.add(a);
             }
         }
         return matchedAlbums;
@@ -96,10 +104,12 @@ public class MusicStore {
     // songs
     public ArrayList<Song> searchSongByTitle(String title) {
         ArrayList<Song> matchedSongs = new ArrayList<>();
-        for (Album a : albums) {
-            for (Song s : a.getSongs()) {
-                if (s.getTitle().equalsIgnoreCase(title)) {
-                    matchedSongs.add(s.getCopy()); // Adds song if title matches
+        for (Map.Entry<Album, ArrayList<Song>> entry : albumSongMap.entrySet()) {
+            ArrayList<Song> songs = entry.getValue();
+
+            for (Song song : songs) {
+                if (song.getTitle().equalsIgnoreCase(title)) {
+                    matchedSongs.add(song);
                 }
             }
         }
@@ -109,9 +119,13 @@ public class MusicStore {
     // Searches for all songs by the artist and returns a list of matching songs
     public ArrayList<Song> searchSongByArtist(String artist) {
         ArrayList<Song> artistSongs = new ArrayList<>();
-        for (Album a : albums) {
-            if (a.getArtist().equals(artist))
-                artistSongs.addAll(a.getAlbumCopy().getSongs()); // Adds all songs from matching albums
+        for (Entry<Album, ArrayList<Song>> entry : albumSongMap.entrySet()) {
+            Album album = entry.getKey();
+            ArrayList<Song> songs = entry.getValue();
+
+            if (album.getArtist().equalsIgnoreCase(artist)) {
+                artistSongs.addAll(songs); // Add all songs from this album
+            }
         }
         return artistSongs;
     }
@@ -122,8 +136,8 @@ public class MusicStore {
             for (Song s : a.getSongs()) {
                 if (s.getTitle().equalsIgnoreCase(title)) {
                     // Format: Song Title - Album: [Album Name] - Artist: [Artist Name] - Year: [Year]
-                    return String.format("Song: %s - Album: %s - Artist: %s - Year: %d", 
-                                        s.getTitle(), a.getTitle(), a.getArtist(), a.getYear());
+                    return String.format("Song: %s - Album: %s - Artist: %s - Year: %d - Genre: %s", 
+                                        s.getTitle(), a.getTitle(), a.getArtist(), a.getYear(), a.getGenre());
                 }
             }
         }
@@ -135,8 +149,8 @@ public class MusicStore {
         for (Album a : albums) {
             if (a.getTitle().equalsIgnoreCase(title)) {
                 StringBuilder info = new StringBuilder();
-                info.append(String.format("Album: %s - Artist: %s - Year: %d\n", 
-                                         a.getTitle(), a.getArtist(), a.getYear()));
+                info.append(String.format("Album: %s - Artist: %s - Year: %d - Genre: %s\n", 
+                                         a.getTitle(), a.getArtist(), a.getYear(), a.getGenre()));
                 info.append("Songs:\n");
                 for (Song s : a.getSongs()) {
                     info.append(" - ").append(s.getTitle()).append("\n");
