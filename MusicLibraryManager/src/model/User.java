@@ -1,12 +1,12 @@
 package model;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class User {
 	private String userName;
@@ -19,19 +19,7 @@ public class User {
 		userLib = new LibraryModel();
 		this.salt = createSalt();
 		this.hashedPassword = generateHash(password, this.salt);
-
-		String line = userName + ',' + hashedPassword + ',' + salt;
-
-		// write data to file
-		BufferedWriter writter;
-		try {
-			writter = new BufferedWriter(new FileWriter("users.txt", true));
-			writter.newLine();
-			writter.write(line);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		writeData();
 	}
 
 	// generate salt for password securtiy
@@ -57,6 +45,17 @@ public class User {
 			e.printStackTrace();
 		}
 		return ret;
+	}
+	
+	public void writeData() {
+		String line = userName + ", " + hashedPassword + ", " + salt + '\n';
+
+		// write data to file
+		try (FileWriter writer = new FileWriter("users.txt", true)){
+			writer.write(line);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean checkPassword(String guessedPassword){

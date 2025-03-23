@@ -30,12 +30,6 @@ public class LibraryModel {
         songs.add(song);
     }
 
-	public ArrayList<Song> getSuffledSongs() {
-		ArrayList<Song> shuffledSongs = new ArrayList<>(songs);
-		Collections.shuffle(shuffledSongs);
-		return shuffledSongs;
-	}
-
     // Removes a song from the library
     public void removeSong(String title) {
         songs.removeIf(song -> song.getTitle().equals(title));
