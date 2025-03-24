@@ -23,11 +23,18 @@ public class LibraryModel {
     public void addSong(Song song) {
         // Check if song already exists to avoid duplicates
         for (Song s : songs) {
-            if (s.getTitle().equals(song.getTitle())) {
+            if (s.getTitle().equalsIgnoreCase(song.getTitle())) {
                 return; // Song already exists, don't add
             }
         }
         songs.add(song);
+    }
+
+    public void playSong(String title) {
+        Song song = getSong(title);
+        if (song != null) {
+            song.play(); // Play the song
+        }
     }
 
     // Removes a song from the library
@@ -53,8 +60,8 @@ public class LibraryModel {
         // Check if album already exists
         boolean albumExists = false;
         for (Album a : albums) {
-            if (a.getTitle().equals(sourceAlbum.getTitle()) && 
-                a.getArtist().equals(sourceAlbum.getArtist())) {
+            if (a.getTitle().equalsIgnoreCase(sourceAlbum.getTitle()) && 
+                a.getArtist().equalsIgnoreCase(sourceAlbum.getArtist())) {
                 albumExists = true;
                 break;
             }
@@ -78,7 +85,7 @@ public class LibraryModel {
     // Searches for a playlist by name and returns it
     public PlayList getPlayList(String name) {
         for (PlayList p : playlists) {
-            if (p.getName().equals(name))
+            if (p.getName().equalsIgnoreCase(name))
                 return p; // Finds and returns the playlist with the matching name
         }
         return null; // Returns null if no playlist is found with that name
@@ -87,7 +94,7 @@ public class LibraryModel {
 	// Searches for a song by title and returns it
 	public Song getSong(String title) {
 		for (Song s : songs) {
-			if (s.getTitle().equals(title))
+			if (s.getTitle().equalsIgnoreCase(title))
 				return s; // Finds and returns the song with the matching title
 		}
 		return null; // Returns null if the song is not found

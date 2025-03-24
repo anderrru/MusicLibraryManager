@@ -42,6 +42,9 @@ public class UserManager {
 	}
 	
 	public User loginUser(String userName, String password) {
+		if (!users.containsKey(userName)) {
+			return null; // User not found
+		}
 		User user = users.get(userName);
 		if (user.checkPassword(password)) {
 			return user;

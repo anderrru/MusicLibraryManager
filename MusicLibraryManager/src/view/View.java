@@ -27,60 +27,22 @@ public class View {
 	public void start() {
 		while (true) {
 			System.out.println("\nMusic Store System");
-			System.out.println("1. Search Store for a song by title");
-			System.out.println("2. Search Store for a song by artist");
-			System.out.println("3. Search Store for an album by title");
-			System.out.println("4. Search Store for an album by artist");
-			System.out.println("---");
-			System.out.println("5. Search library for a song by title");
-			System.out.println("6. Search library for a song by artist");
-			System.out.println("7. Search library for an album by title");
-			System.out.println("8. Search library for an album by artist");
-			System.out.println("9. Add a song to library");
-			System.out.println("10. Add an album to library");
-			System.out.println("11. List library contents");
-			System.out.println("12. Create a playlist");
-			System.out.println("13. Add song to a playlist");
-			System.out.println("14. Remove song from a playlist");
-			System.out.println("15. Mark song as favorite");
-			System.out.println("16. Rate a song");
-			System.out.println("17. List Favorite Songs");
-			System.out.println("18. Get Popular Genres"); // New option
-			System.out.println("19. Get Top Rated Songs"); // New option
-			System.out.println("20. Get Shuffled Playlist"); // New option
-			System.out.println("21. Get Songs Sorted by Rating"); // New option
-			System.out.println("22. Logout");
-			System.out.print("Choose an option: ");
+			System.out.println("1. Music Store Features");
+			System.out.println("2. User Library Features");
+			System.out.println("3. Logout");
+			System.out.print("Choose a section: ");
 
-			int choice = scanner.nextInt();
+			int sectionChoice = scanner.nextInt();
 			scanner.nextLine(); // consume newline character
-			switch (choice) {
-			case 1 -> searchSongByTitle(); // Search for a song by title
-			case 2 -> searchSongByArtist(); // Search for a song by artist
-			case 3 -> searchAlbumByTitle(); // Search for an album by title
-			case 4 -> searchAlbumByArtist(); // Search for an album by artist
-			case 5 -> searchLibrarySongByTitle(); // Search for a song by title
-			case 6 -> searchLibrarySongByArtist(); // Search for a song by artist
-			case 7 -> searchLibraryAlbumByTitle(); // Search for an album by title
-			case 8 -> searchLibraryAlbumByArtist(); // Search for an album by artist
-			case 9 -> addSongToLibrary(); // Add a song to the user's library
-			case 10 -> addAlbumToLibrary(); // Add an album to the user's library
-			case 11 -> listLibraryContents(); // List all contents in the library
-			case 12 -> createPlaylist(); // Create a new playlist
-			case 13 -> addSongToPlaylist(); // Add a song to an existing playlist
-			case 14 -> removeSongFromPlaylist(); // Remove a song from a playlist
-			case 15 -> markSongAsFavorite(); // Mark a song as favorite
-			case 16 -> rateSong(); // Rate a song
-			case 17 -> getFavorites(); // List all favorite songs
-			case 18 -> getPopularGenres(); // Call new method
-			case 19 -> getTopRatedSongs(); // Call new method
-			case 20 -> getShuffledPlaylist(); // Call new method
-			case 21 -> getSongsSortedByRating(); // Call new method
-			case 22 -> { // Exit the program
-				System.out.println("Loging out...");
-				return;
-			}
-			default -> System.out.println("Invalid choice. Try again."); // Handle invalid choices
+
+			switch (sectionChoice) {
+				case 1 -> musicStoreMenu(); // Navigate to Music Store menu
+				case 2 -> userLibraryMenu(); // Navigate to User Library menu
+				case 3 -> {
+					System.out.println("Logging out...");
+					return;
+				}
+				default -> System.out.println("Invalid choice. Try again.");
 			}
 		}
 	}
@@ -94,7 +56,7 @@ public class View {
 			System.out.println("Song not found.");
 		} else {
 			for (Song s : songs) {
-				System.out.println("Found: " + s.getTitle());
+				System.out.println("Found: " + musicStore.getSongInfo(title));
 			}
 		}
 	}
@@ -109,7 +71,7 @@ public class View {
 			System.out.println("No songs found for artist " + artist);
 		} else {
 			for (Song s : songs) {
-				System.out.println("Found: " + s.getTitle());
+				System.out.println("Found: " + musicStore.getSongInfo(s.getTitle()));
 			}
 		}
 	}
@@ -124,7 +86,7 @@ public class View {
 			System.out.println("Album not found.");
 		} else {
 			for (Album a : albums) {
-				System.out.println("Found: " + a.getTitle() + " by " + a.getArtist());
+				System.out.println("Found: " + musicStore.getAlbumInfo(title));
 			}
 		}
 	}
@@ -139,7 +101,7 @@ public class View {
 			System.out.println("No albums found for artist " + artist);
 		} else {
 			for (Album a : albums) {
-				System.out.println("Found: " + a.getTitle() + " (" + a.getYear() + ")");
+				System.out.println("Found: " + musicStore.getAlbumInfo(a.getTitle()));
 			}
 		}
 	}
@@ -337,5 +299,96 @@ public class View {
 				System.out.println("- " + song.getTitle() + " (Rating: " + song.getRating() + ")");
 			}
 		}
+	}
+
+	private void musicStoreMenu() {
+	    while (true) {
+	        System.out.println("\nMusic Store Features");
+	        System.out.println("1. Search Store for a song by title");
+	        System.out.println("2. Search Store for a song by artist");
+	        System.out.println("3. Search Store for an album by title");
+	        System.out.println("4. Search Store for an album by artist");
+	        System.out.println("5. Back to Main Menu");
+	        System.out.print("Choose an option: ");
+
+	        int choice = scanner.nextInt();
+	        scanner.nextLine(); // consume newline character
+
+	        switch (choice) {
+	            case 1 -> searchSongByTitle();
+	            case 2 -> searchSongByArtist();
+	            case 3 -> searchAlbumByTitle();
+	            case 4 -> searchAlbumByArtist();
+	            case 5 -> {
+	                return; // Go back to the main menu
+	            }
+	            default -> System.out.println("Invalid choice. Try again.");
+	        }
+	    }
+	}
+
+	private void userLibraryMenu() {
+	    while (true) {
+	        System.out.println("\nUser Library Features");
+	        System.out.println("1. Search library for a song by title");
+	        System.out.println("2. Search library for a song by artist");
+	        System.out.println("3. Search library for an album by title");
+	        System.out.println("4. Search library for an album by artist");
+	        System.out.println("5. Add a song to library");
+	        System.out.println("6. Add an album to library");
+	        System.out.println("7. List library contents");
+	        System.out.println("8. Create a playlist");
+	        System.out.println("9. Add song to a playlist");
+	        System.out.println("10. Remove song from a playlist");
+	        System.out.println("11. Mark song as favorite");
+	        System.out.println("12. Rate a song");
+	        System.out.println("13. List Favorite Songs");
+	        System.out.println("14. Get Popular Genres");
+	        System.out.println("15. Get Top Rated Songs");
+	        System.out.println("16. Get Shuffled Playlist");
+	        System.out.println("17. Get Songs Sorted by Rating");
+	        System.out.println("18. Play a Song"); // New option
+	        System.out.println("19. Back to Main Menu");
+	        System.out.print("Choose an option: ");
+
+	        int choice = scanner.nextInt();
+	        scanner.nextLine(); // consume newline character
+
+	        switch (choice) {
+	            case 1 -> searchLibrarySongByTitle();
+	            case 2 -> searchLibrarySongByArtist();
+	            case 3 -> searchLibraryAlbumByTitle();
+	            case 4 -> searchLibraryAlbumByArtist();
+	            case 5 -> addSongToLibrary();
+	            case 6 -> addAlbumToLibrary();
+	            case 7 -> listLibraryContents();
+	            case 8 -> createPlaylist();
+	            case 9 -> addSongToPlaylist();
+	            case 10 -> removeSongFromPlaylist();
+	            case 11 -> markSongAsFavorite();
+	            case 12 -> rateSong();
+	            case 13 -> getFavorites();
+	            case 14 -> getPopularGenres();
+	            case 15 -> getTopRatedSongs();
+	            case 16 -> getShuffledPlaylist();
+	            case 17 -> getSongsSortedByRating();
+	            case 18 -> playSong(); // Call the new playSong method
+	            case 19 -> {
+	                return; // Go back to the main menu
+	            }
+	            default -> System.out.println("Invalid choice. Try again.");
+	        }
+	    }
+	}
+
+	private void playSong() {
+	    System.out.print("Enter song title to play: ");
+	    String title = scanner.nextLine();
+	    if (library.hasSong(title)) {
+	        library.playSong(title);
+	        System.out.println("Playing song: " + title);
+	    } else {
+	        System.out.println("Song \"" + title + "\" not found in the library.");
+	    }
 	}
 }

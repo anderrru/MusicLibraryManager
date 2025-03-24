@@ -6,12 +6,14 @@ public class Song {
     private boolean favorite; // Flag indicating if the song is marked as favorite
     private Rating rating; // Rating object for the song
     private boolean ratingSet; // Flag indicating if the song has a rating set
+    private int plays;
 
     // Constructor to initialize the song with a title
     public Song(String title) {
         this.title = title;
         favorite = false; // Default to not favorite
         ratingSet = false; // Default to no rating set
+        plays = 0;
     }
 
     // Sets the rating for the song and marks it as a favorite if rating is 5
@@ -20,6 +22,10 @@ public class Song {
         this.rating = new Rating(rating);
         if (rating == 5)
             favorite = true; // Mark as favorite if rating is 5
+    }
+    
+    public void play() {
+    	plays += 1;
     }
 
     // Returns the title of the song
