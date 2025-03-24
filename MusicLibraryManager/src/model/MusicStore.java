@@ -85,7 +85,11 @@ public class MusicStore {
 
     // Returns a copy of the list of all albums in the music store
     public ArrayList<Album> getAlbums() {
-        return new ArrayList<>(albums);
+        ArrayList<Album> newAlbums = new ArrayList<>();
+        for (Album a : albums) {
+            newAlbums.add(a.getAlbumCopy());
+        }
+        return newAlbums;
     }
 
     // Searches for albums by title (case-insensitive) and returns a list of

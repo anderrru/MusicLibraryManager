@@ -180,15 +180,19 @@ public class View {
 
 	// Prompts the user to add an album to the library
 	private void addAlbumToLibrary() {
-		System.out.print("Enter album title to add: ");
-		String title = scanner.nextLine();
-		ArrayList<Album> albums = musicStore.searchAlbumByTitle(title);
-		if (!albums.isEmpty()) {
-			library.addAlbum(albums.get(0));
-			System.out.println("Album added to library.");
-		} else {
-			System.out.println("Album not found in store.");
-		}
+	    System.out.print("Enter album title to add: ");
+	    String title = scanner.nextLine();
+	    if (title.isBlank()) {
+	        System.out.println("Invalid input. Album title cannot be empty.");
+	        return;
+	    }
+	    ArrayList<Album> albums = musicStore.searchAlbumByTitle(title);
+	    if (albums.isEmpty()) {
+	        System.out.println("Album \"" + title + "\" not found in the store.");
+	    } else {
+	        library.addAlbum(albums.get(0));
+	        System.out.println("Album \"" + title + "\" added to library.");
+	    }
 	}
 
 	// Lists all songs and albums in the user's library
@@ -207,22 +211,61 @@ public class View {
 
 	// Prompts the user to add a song to a specific playlist
 	private void addSongToPlaylist() {
-		System.out.print("Enter playlist name: ");
-		String playlistName = scanner.nextLine();
-		System.out.print("Enter song title: ");
-		String songTitle = scanner.nextLine();
-		// Additional logic needed to locate and add song to playlists
-		library.getPlayList(playlistName).addSong(library.getSong(songTitle));
+	    System.out.print("Enter playlist name: ");
+	    String playlistName = scanner.nextLine();
+	    if (playlistName.isBlank()) {
+	        System.out.println("Invalid input. Playlist name cannot be empty.");
+	        return;
+	    }
+	    PlayList playlist = library.getPlayList(playlistName);
+	    if (playlist == null) {
+	        System.out.println("Playlist \"" + playlistName + "\" does not exist.");
+	        return;
+	    }
+
+	    System.out.print("Enter song title: ");
+	    String songTitle = scanner.nextLine();
+	    if (songTitle.isBlank()) {
+	        System.out.println("Invalid input. Song title cannot be empty.");
+	        return;
+	    }
+	    Song song = library.getSong(songTitle);
+	    if (song == null) {
+	        System.out.println("Song \"" + songTitle + "\" does not exist in the library.");
+	        return;
+	    }
+
+	    playlist.addSong(song);
+	    System.out.println("Song \"" + songTitle + "\" added to playlist \"" + playlistName + "\".");
 	}
 
 	// Prompts the user to remove a song from a specific playlist
 	private void removeSongFromPlaylist() {
-		System.out.print("Enter playlist name: ");
-		String playlistName = scanner.nextLine();
-		System.out.print("Enter song title to remove: ");
-		String songTitle = scanner.nextLine();
-		// Additional logic needed to locate and remove song from playlist
-		library.getPlayList(playlistName).removeSong(songTitle);
+	    System.out.print("Enter playlist name: ");
+	    String playlistName = scanner.nextLine();
+	    if (playlistName.isBlank()) {
+	        System.out.println("Invalid input. Playlist name cannot be empty.");
+	        return;
+	    }
+	    PlayList playlist = library.getPlayList(playlistName);
+	    if (playlist == null) {
+	        System.out.println("Playlist \"" + playlistName + "\" does not exist.");
+	        return;
+	    }
+
+	    System.out.print("Enter song title to remove: ");
+	    String songTitle = scanner.nextLine();
+	    if (songTitle.isBlank()) {
+	        System.out.println("Invalid input. Song title cannot be empty.");
+	        return;
+	    }
+	    if (!playlist.hasSong(songTitle)) {
+	        System.out.println("Song \"" + songTitle + "\" does not exist in the playlist \"" + playlistName + "\".");
+	        return;
+	    }
+
+	    playlist.removeSong(songTitle);
+	    System.out.println("Song \"" + songTitle + "\" removed from playlist \"" + playlistName + "\".");
 	}
 
 	// Prompts the user to mark a song as favorite
@@ -235,13 +278,28 @@ public class View {
 
 	// Prompts the user to rate a song
 	private void rateSong() {
-		System.out.print("Enter song title: ");
-		String title = scanner.nextLine();
-		System.out.print("Enter rating (1-5): ");
-		int rating = scanner.nextInt();
-		scanner.nextLine(); // consume newline
-		// Additional logic to rate the song
-		library.getSong(title).setRating(rating);
+	    System.out.print("Enter song title: ");
+	    String title = scanner.nextLine();
+	    if (title.isBlank()) {
+	        System.out.println("Invalid input. Song title cannot be empty.");
+	        return;
+	    }
+	    Song song = library.getSong(title);
+	    if (song == null) {
+	        System.out.println("Song \"" + title + "\" not found in the library.");
+	        return;
+	    }
+
+	    System.out.print("Enter rating (1-5): ");
+	    int rating = scanner.nextInt();
+	    scanner.nextLine(); // consume newline
+	    if (rating < 1 || rating > 5) {
+	        System.out.println("Invalid rating. Please enter a value between 1 and 5.");
+	        return;
+	    }
+
+	    song.setRating(rating);
+	    System.out.println("Song \"" + title + "\" rated " + rating + " stars.");
 	}
 
 	// Displays all the favorite songs in the library
@@ -279,16 +337,28 @@ public class View {
 	}
 
 	private void getShuffledPlaylist() {
-		PlayList shuffled = library.getShuffledPlaylist("My Playlist");
-		if (shuffled.getSongs().isEmpty()) {
-			System.out.println("No songs found in the playlist.");
-		} else {
-			System.out.println("Shuffled Playlist:");
-			for (Song song : shuffled.getSongs()) {
-				System.out.println("- " + song.getTitle());
-			}
-		}
+	    System.out.print("Enter playlist title: ");
+	    String title = scanner.nextLine();
+	    if (title.isBlank()) {
+	        System.out.println("Invalid input. Playlist title cannot be empty.");
+	        return;
+	    }
+	    PlayList shuffled = library.getShuffledPlaylist(title);
+	    if (shuffled == null) {
+	        System.out.println("Playlist \"" + title + "\" does not exist.");
+	        return;
+	    }
+	    if (shuffled.getSongs().isEmpty()) {
+	        System.out.println("No songs found in the playlist \"" + title + "\".");
+	        return;
+	    }
+
+	    System.out.println("Shuffled Playlist:");
+	    for (Song song : shuffled.getSongs()) {
+	        System.out.println("- " + song.getTitle());
+	    }
 	}
+
 	private void getSongsSortedByRating() {
 		ArrayList<Song> sortedSongs = library.getSongsSortedByRating();
 		if (sortedSongs.isEmpty()) {
@@ -384,6 +454,10 @@ public class View {
 	private void playSong() {
 	    System.out.print("Enter song title to play: ");
 	    String title = scanner.nextLine();
+	    if (title.isBlank()) {
+	        System.out.println("Invalid input. Song title cannot be empty.");
+	        return;
+	    }
 	    if (library.hasSong(title)) {
 	        library.playSong(title);
 	        System.out.println("Playing song: " + title);

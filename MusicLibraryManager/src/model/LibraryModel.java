@@ -143,7 +143,7 @@ public class LibraryModel {
     // Check if a song exists in the library
     public boolean hasSong(String title) {
         for (Song s : songs) {
-            if (s.getTitle().equals(title))
+            if (s.getTitle().equalsIgnoreCase(title))
                 return true;
         }
         return false;
@@ -152,7 +152,7 @@ public class LibraryModel {
     // Check if an album exists in the library
     public boolean hasAlbum(String title) {
         for (Album a : albums) {
-            if (a.getTitle().equals(title))
+            if (a.getTitle().equalsIgnoreCase(title))
                 return true;
         }
         return false;
