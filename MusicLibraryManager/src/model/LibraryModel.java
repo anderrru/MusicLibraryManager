@@ -3,7 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -264,35 +266,42 @@ public class LibraryModel {
     }
 
     
-    // TODO: fix this
-//    // Get playlist of genres with at least 10 songs in the library of that genre
-//    public ArrayList<String> getPopularGenres() {
-//        // Count songs by genre
-//        java.util.HashMap<Genre, Integer> genreCounts = new java.util.HashMap<>();
-//        
-//        for (Song song : songs) {
-//            Genre genre = null;
-//            for (Album album : albums) {
-//                if (album.getSongs().contains(song)) {
-//                    genre = album.getGenre();
-//                    break;
-//                }
-//            }
-//            if (genre != null) {
-//                genreCounts.put(genre, genreCounts.getOrDefault(genre, 0) + 1);
-//            }
-//        }
-//        
-//        // Find genres with at least 10 songs
-//        ArrayList<String> popularGenres = new ArrayList<>();
-//        for (java.util.Map.Entry<Genre, Integer> entry : genreCounts.entrySet()) {
-//            if (entry.getValue() >= 10) {
-//                popularGenres.add(entry.getKey().toString());
-//            }
-//        }
-//        
-//        return popularGenres;
-//    }
+ // Add this method inside your LibraryModel class
+    public ArrayList<String> getPopularGenres() {
+        // Count songs by genre
+        HashMap<Genre, Integer> genreCounts = new HashMap<>();
+        
+        for (Song song : songs) {
+            Genre songGenre = null;
+            // Find the album that contains this song by comparing song titles
+            for (Album album : albums) {
+                for (Song albumSong : album.getSongs()) {
+                    if (albumSong.getTitle().equalsIgnoreCase(song.getTitle())) {
+                        songGenre = album.getGenre();
+                        break;
+                    }
+                }
+                if (songGenre != null) {
+                    break;
+                }
+            }
+            // If a genre was found, increment its count
+            if (songGenre != null) {
+                genreCounts.put(songGenre, genreCounts.getOrDefault(songGenre, 0) + 1);
+            }
+        }
+        
+        // Filter and collect genres that have at least 10 songs
+        ArrayList<String> popularGenres = new ArrayList<>();
+        for (Map.Entry<Genre, Integer> entry : genreCounts.entrySet()) {
+            if (entry.getValue() >= 10) {
+                popularGenres.add(entry.getKey().toString());
+            }
+        }
+        
+        return popularGenres;
+    }
+    
 
     // Returns a playlist of top-rated songs (rated 4 or 5)
     public PlayList getTopRatedSongs() {
