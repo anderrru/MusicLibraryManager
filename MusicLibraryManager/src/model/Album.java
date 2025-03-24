@@ -59,8 +59,7 @@ public class Album {
 			songs.add(s.getCopy());
 		}
 		// Creates and returns a new album with the copied songs
-		Album a = new Album(this.title, this.artist, this.year, songs, this.genre);
-		return a;
+        return new Album(this.title, this.artist, this.year, songs, this.genre);
 	}
 
 	// Returns the release year of the album

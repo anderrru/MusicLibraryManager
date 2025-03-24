@@ -22,6 +22,14 @@ public class PlayList {
 		songs.add(0, song);
 	}
 
+	public boolean hasSong(String song) {
+		for (Song s : songs) {
+			if (s.getTitle().equalsIgnoreCase(song))
+				return true;
+		}
+		return false;
+	}
+	
 	// Removes a song from the playlist by its title
 	public void removeSong(String title) {
 		songs.removeIf(song -> song.getTitle().equals(title)); // Removes song if title matches
