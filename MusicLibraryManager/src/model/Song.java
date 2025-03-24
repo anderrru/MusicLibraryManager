@@ -27,7 +27,15 @@ public class Song {
     public void play() {
     	plays += 1;
     }
+    
+    public int getPlays() {
+    	return this.plays;
+    }
 
+    public void playAmt(int amount) {
+    	this.plays += amount;
+    }
+    
     // Returns the title of the song
     public String getTitle() {
         return title;

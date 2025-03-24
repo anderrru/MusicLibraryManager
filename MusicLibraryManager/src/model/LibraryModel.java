@@ -313,4 +313,14 @@ public class LibraryModel {
         }
         return topRated;
     }
+    
+    public PlayList getMostFreqPlayedSongs() {
+    	PlayList freq = new PlayList("Frequently Played");
+    	ArrayList<Song> sortedSongs = new ArrayList<>(songs);
+    	sortedSongs.sort(Comparator.comparing(Song::getPlays));
+    	for (int i = 1; i <= 10; i++) {
+    		freq.addSong(sortedSongs.get(i));
+    	}
+    	return freq;
+    }
 }

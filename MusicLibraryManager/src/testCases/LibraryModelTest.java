@@ -205,4 +205,68 @@ public class LibraryModelTest {
         assertEquals(1, favorites.size());
         assertEquals("Song2", favorites.get(0).getTitle());
     }
+
+        @Test
+        public void testGetMostFreqPlayedSongs() {
+            // Create a LibraryModel instance
+            LibraryModel library = new LibraryModel();
+
+            // Create and add songs with varying play counts
+            Song song1 = new Song("Song 1"); // 3 plays
+            Song song2 = new Song("Song 2"); // 10 plays
+            Song song3 = new Song("Song 3"); // 7 plays
+            Song song4 = new Song("Song 4"); // 15 plays
+            Song song5 = new Song("Song 5"); // 5 plays
+            Song song6 = new Song("Song 6"); // 20 plays
+            Song song7 = new Song("Song 7"); // 8 plays
+            Song song8 = new Song("Song 8"); // 12 plays
+            Song song9 = new Song("Song 9"); // 1 play
+            Song song10 = new Song("Song 10"); // 6 plays
+            Song song11 = new Song("Song 11"); // 4 plays
+            
+            song1.playAmt(3);
+            song2.playAmt(10);
+            song3.playAmt(7);
+            song4.playAmt(15);
+            song5.playAmt(5);
+            song6.playAmt(20);
+            song7.playAmt(8);
+            song8.playAmt(12);
+            song9.playAmt(1);
+            song10.playAmt(6);
+            song11.playAmt(4);
+
+            // Add songs to the library
+            library.addSong(song1);
+            library.addSong(song2);
+            library.addSong(song3);
+            library.addSong(song4);
+            library.addSong(song5);
+            library.addSong(song6);
+            library.addSong(song7);
+            library.addSong(song8);
+            library.addSong(song9);
+            library.addSong(song10);
+            library.addSong(song11);
+
+            // Get the most frequently played songs
+            PlayList mostFreqPlayed = library.getMostFreqPlayedSongs();
+
+            // Verify the playlist contains exactly 10 songs
+            assertEquals(10, mostFreqPlayed.getSongs().size(), "The playlist should contain 10 songs.");
+
+            // Verify the songs are sorted by play count in descending order
+            ArrayList<Song> songs = mostFreqPlayed.getSongs();
+            assertEquals("Song 6", songs.get(0).getTitle(), "The most played song should be 'Song 6'.");
+            assertEquals("Song 4", songs.get(1).getTitle(), "The second most played song should be 'Song 4'.");
+            assertEquals("Song 8", songs.get(2).getTitle(), "The third most played song should be 'Song 8'.");
+            assertEquals("Song 2", songs.get(3).getTitle(), "The fourth most played song should be 'Song 2'.");
+            assertEquals("Song 7", songs.get(4).getTitle(), "The fifth most played song should be 'Song 7'.");
+            assertEquals("Song 3", songs.get(5).getTitle(), "The sixth most played song should be 'Song 3'.");
+            assertEquals("Song 10", songs.get(6).getTitle(), "The seventh most played song should be 'Song 10'.");
+            assertEquals("Song 5", songs.get(7).getTitle(), "The eighth most played song should be 'Song 5'.");
+            assertEquals("Song 11", songs.get(8).getTitle(), "The ninth most played song should be 'Song 11'.");
+            assertEquals("Song 1", songs.get(9).getTitle(), "The tenth most played song should be 'Song 1'.");
+        }
+
 }
