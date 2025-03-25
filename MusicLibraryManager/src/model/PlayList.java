@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayList {
 	private String name; // Name of the playlist
@@ -21,6 +22,10 @@ public class PlayList {
 	public void addSong(Song song) {
 		songs.add(0, song);
 	}
+	
+	public void addToStart(Song song) {
+		songs.add(song);
+	}
 
 	public boolean hasSong(String song) {
 		for (Song s : songs) {
@@ -28,6 +33,10 @@ public class PlayList {
 				return true;
 		}
 		return false;
+	}
+	
+	public void setPlayList(ArrayList<Song> list) {
+		this.songs = list;
 	}
 	
 	// Removes a song from the playlist by its title
