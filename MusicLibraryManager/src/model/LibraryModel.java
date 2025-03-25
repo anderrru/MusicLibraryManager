@@ -48,7 +48,7 @@ public class LibraryModel {
 
     // Removes a song from the library
     public void removeSong(String title) {
-        songs.removeIf(song -> song.getTitle().equals(title));
+        songs.removeIf(song -> song.getTitle().equalsIgnoreCase(title));
         // Also remove the song from all playlists
         for (PlayList playlist : playlists) {
             playlist.removeSong(title);
