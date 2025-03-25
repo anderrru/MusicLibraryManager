@@ -524,15 +524,18 @@ public class View {
 
     // Assumes that the LibraryModel now maintains an automatic playlist of the 10 most frequently played songs.
     private void showFrequentPlays() {
-        PlayList frequentPlays = library.getFrequentPlaysPlaylist();
-        if (frequentPlays == null || frequentPlays.getSongs().isEmpty()) {
+    	if (library.getSongs().size() < 10) System.out.println("Less than 10 songs in library");
+    	else {
+    		        PlayList frequentPlays = library.getFrequentPlaysPlaylist();
+    	if (frequentPlays == null || frequentPlays.getSongs().isEmpty()) {
             System.out.println("No frequent plays available.");
         } else {
             System.out.println("10 Most Frequently Played Songs:");
             for (Song song : frequentPlays.getSongs()) {
                 System.out.println("- " + song.getTitle());
-            }
-        }
+            	}
+        	}
+    	}
     }
 
     private void playSong() {

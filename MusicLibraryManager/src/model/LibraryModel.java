@@ -13,12 +13,14 @@ public class LibraryModel {
     private ArrayList<Song> songs; // List of songs in the library
     private ArrayList<Album> albums; // List of albums in the library
     private ArrayList<PlayList> playlists; // List of playlists in the library
+    private ArrayList<Song> lastPlayed; // list of last played songs
 
     // Constructor initializes the lists of songs, albums, and playlists
     public LibraryModel() {
         songs = new ArrayList<>();
         albums = new ArrayList<>();
         playlists = new ArrayList<>();
+        lastPlayed = new ArrayList<>();
     }
 
     // Adds a song to the library
@@ -37,6 +39,11 @@ public class LibraryModel {
         if (song != null) {
             song.play(); // Play the song
         }
+    	if (this.lastPlayed.size() >= 10) {
+    		lastPlayed.remove(9);
+    	}
+    	song.play();
+		lastPlayed.add(0, song);
     }
 
     // Removes a song from the library
@@ -314,13 +321,19 @@ public class LibraryModel {
         return topRated;
     }
     
-    public PlayList getMostFreqPlayedSongs() {
-    	PlayList freq = new PlayList("Frequently Played");
-    	ArrayList<Song> sortedSongs = new ArrayList<>(songs);
-    	sortedSongs.sort(Comparator.comparing(Song::getPlays));
-    	for (int i = 1; i <= 10; i++) {
-    		freq.addSong(sortedSongs.get(i));
-    	}
-    	return freq;
+    public PlayList getFrequentPlaysPlaylist() {
+        PlayList freq = new PlayList("Frequently Played");
+        ArrayList<Song> sortedSongs = new ArrayList<>(songs);
+        sortedSongs.sort(Comparator.comparing(Song::getPlays).reversed()); // Fix sorting order
+        for (int i = 0; i < 10; i++) {
+            freq.addToStart(sortedSongs.get(i));
+        }
+        return freq;
+    }
+        
+    public PlayList getRecentPlaysPlaylist() {
+        PlayList recent = new PlayList("Recently played");
+        recent.setPlayList(lastPlayed);
+        return recent;
     }
 }
